@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>SecurityExample</display-name>
+
+	<!-- Servlet設定 -->
+	<servlet>
+		<servlet-name>DataServlet</servlet-name>
+		<servlet-class>com.skye.securityExample.web.DataServlet</servlet-class>
+		<init-param>
+			<param-name>base64RsaPrivateKey</param-name>
+			<param-value>MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJpxRsosagwifG4+Oxo8CABKROKkps+mIGhOwin5BS3B3sVx+0DEDBdmvH+PnwI14WW8EutCfcYLvz7lP6bzDnR8b3gQL4LTEFFD5fMV4Fn+NSXyJA4dyuvvhh9HzxT9jT2IkyUMVxr2hJEsd4gDT0XaGLTeLUbBWzSbXmNwRc9XAgMBAAECgYBMFih4696m8cp5iYEWkKKkefJr8hAYVtC6cqqngP4zJ8L3ZQsSQkNut/d/pKMCtMbBlyF+87gA/MKQWuK7/hyNNJYPfPnTGXM8aprYk7zvPhvrJR0Wp5WSPaDRCfbeS+YNKcyWSxsRRnJ/PRT36jKSvlGtzUQBu/7aXtbGfzEvuQJBANIBaKx6lCalPCDzVnL9IBMjXim+jwB8yJ6XvEmFoH7Fsl0FEpDLtMy09kAAZhMOYY/ZdupwwnCUoAK7CwvSQbUCQQC8RI9KQq8zWXUsJqvnFnyVf+cX/iMsdqXlOYgJ72mcV/GtDTIAmrDdf0m8N2h7AVGC5UWeqTO79jDGJAtY/yRbAkEAw31aQkztQrhIK+g5jltBk282BagFGJAQdUmMlehVig1gxySkrrNiP7kpDlUQsCaP/UeTYhPLfN9twHz7gGqejQJAPyaEJfWuTPwh2Jh0KwSY75DClIKzi7OUvAoLPsHm3AGH2HNHpXo9/141/oNbcX8kt1JuguTgrJjNDXmDsOuMZwJBAKHJvCjTyTXJ3lflJ18yDbqK4Knvq/zPkucJ7vuB6Dq1UFTaNPTQALaRn79ejiFq5bwI62fzQX3Z4XAC2ajxpsU=</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DataServlet</servlet-name>
+		<url-pattern>/dataServlet</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
