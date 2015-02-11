@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="SecurityExample">
+	<property environment="env" />
+	<property name="ECLIPSE_HOME" value="../../Program Files/eclipse/" />
+	<property name="junit.output.dir" value="junit" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.7" />
+	<property name="source" value="1.7" />
+	<path id="Web 應用程式程式庫.libraryclasspath">
+		<pathelement location="WebContent/WEB-INF/lib/bcprov-ext-jdk15on-150.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/commons-codec-1.8.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/hamcrest-core-1.3.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/junit-4.11.jar" />
+	</path>
+	<path id="EAR Libraries.libraryclasspath" />
+	<path id="Apache Tomcat v7.0 [Apache Tomcat v7.0].libraryclasspath">
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/annotations-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/catalina-ant.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/catalina-ha.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/catalina-tribes.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/catalina.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/ecj-3.7.2.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/el-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/jasper-el.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/jasper.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/jsp-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/servlet-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-coyote.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-dbcp.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-i18n-es.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-i18n-fr.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-i18n-ja.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-jdbc.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-util.jar" />
+	</path>
+	<path id="SecurityExample.classpath">
+		<pathelement location="build/classes" />
+		<path refid="Web 應用程式程式庫.libraryclasspath" />
+		<path refid="EAR Libraries.libraryclasspath" />
+		<path refid="Apache Tomcat v7.0 [Apache Tomcat v7.0].libraryclasspath" />
+	</path>
+
+	<war destfile="SecurityExample.war" webxml="WebContent/WEB-INF/web.xml">
+		<lib dir="WebContent\WEB-INF\lib" />
+		<classes dir="src" />
+		<classes dir="test" />
+		<classes dir="build\classes" />
+		<fileset dir="WebContent" />
+	</war>
+
+	<target name="init">
+		<mkdir dir="build/classes" />
+		<copy includeemptydirs="false" todir="build/classes">
+			<fileset dir="src">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+		<copy includeemptydirs="false" todir="build/classes">
+			<fileset dir="test">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="clean">
+		<delete dir="build/classes" />
+	</target>
+	<target depends="clean" name="cleanall" />
+	<target depends="build-subprojects,build-project" name="build" />
+	<target name="build-subprojects" />
+	<target depends="init" name="build-project">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<src path="test" />
+			<classpath refid="SecurityExample.classpath" />
+		</javac>
+	</target>
+	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects" />
+	<target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+		<copy todir="${ant.library.dir}">
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</copy>
+		<unzip dest="${ant.library.dir}">
+			<patternset includes="jdtCompilerAdapter.jar" />
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</unzip>
+	</target>
+	<target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+		<antcall target="build" />
+	</target>
+	<target name="BouncyCastleBase64ExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.base64.BouncyCastleBase64ExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="BouncyCastleMACExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.mac.BouncyCastleMACExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="BouncyCastleMDExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.md.BouncyCastleMDExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="BouncyCastleSHAExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.sha.BouncyCastleSHAExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="CommonsCodecBase64Example">
+		<java classname="com.skye.securityExample.base64.CommonsCodecBase64Example" failonerror="true" fork="yes">
+			<classpath refid="SecurityExample.classpath" />
+		</java>
+	</target>
+	<target name="CommonsCodecBase64ExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.base64.CommonsCodecBase64ExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="CommonsCodecMDExample">
+		<java classname="com.skye.securityExample.md.CommonsCodecMDExample" failonerror="true" fork="yes">
+			<classpath refid="SecurityExample.classpath" />
+		</java>
+	</target>
+	<target name="CommonsCodecMDExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.md.CommonsCodecMDExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="CommonsCodecMessageDigestExample">
+		<java classname="com.skye.securityExample.messageDigest.CommonsCodecMessageDigestExample" failonerror="true" fork="yes">
+			<classpath refid="SecurityExample.classpath" />
+		</java>
+	</target>
+	<target name="CommonsCodecSHAExample">
+		<java classname="com.skye.securityExample.sha.CommonsCodecSHAExample" failonerror="true" fork="yes">
+			<classpath refid="SecurityExample.classpath" />
+		</java>
+	</target>
+	<target name="CommonsCodecSHAExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.sha.CommonsCodecSHAExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="DataServletTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.web.DataServletTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="JavaAESExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.symmetricKey.aes.JavaAESExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="JavaMACExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.mac.JavaMACExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="JavaMACExampleTest.testEncodeHmacSHA512">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.mac.JavaMACExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="JavaMDExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.md.JavaMDExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="JavaMessageDigestExample">
+		<java classname="com.skye.securityExample.messageDigest.JavaMessageDigestExample" failonerror="true" fork="yes">
+			<classpath refid="SecurityExample.classpath" />
+		</java>
+	</target>
+	<target name="JavaSHAExampleTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.sha.JavaSHAExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="JavaSHAExampleTest.testEncodeSHA">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.hashFunction.sha.JavaSHAExampleTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="SecurityExample">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.skye.securityExample.base64.BouncyCastleBase64ExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.base64.CommonsCodecBase64ExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.digitalSignature.dsaSign.JavaDSASignExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.digitalSignature.ecdsaSign.BouncyCastleECDSASignExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.digitalSignature.rsaSign.JavaRSASignExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.crc.CRCTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.hmacRipeMd.BouncyCastleMACRipeMDExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.mac.BouncyCastleMACExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.mac.JavaMACExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.md.BouncyCastleMDExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.md.CommonsCodecMDExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.md.JavaMDExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.md.MD5Test" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.ripeMd.BouncyCastleRipeMDExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.sha.BouncyCastleSHAExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.sha.CommonsCodecSHAExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.hashFunction.sha.JavaSHAExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.publicKey.dh.JavaDHExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.publicKey.elgamal.BouncyCastleElGamalExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.publicKey.rsa.JavaRSAExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.symmetricKey.aes.BouncyCastleAESExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.symmetricKey.aes.JavaAESExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.symmetricKey.des.BouncyCastleDESExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.symmetricKey.des.JavaDESExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.symmetricKey.desede.BouncyCastleDESedeExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.symmetricKey.desede.JavaDESedeExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.symmetricKey.idea.BouncyCastleIDEAExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.symmetricKey.pbe.JavaPBEExampleTest" todir="${junit.output.dir}" />
+			<test name="com.skye.securityExample.web.DataServletTest" todir="${junit.output.dir}" />
+			<classpath refid="SecurityExample.classpath" />
+		</junit>
+	</target>
+	<target name="junitreport">
+		<junitreport todir="${junit.output.dir}">
+			<fileset dir="${junit.output.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${junit.output.dir}" />
+		</junitreport>
+	</target>
+</project>
